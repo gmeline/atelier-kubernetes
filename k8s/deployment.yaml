@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kube-app
+  template:
+    metadata:
+      labels:
+        app: kube-app
+    spec:
+      containers:
+        - name: kube-app
+          image: gmeline/kube-app:1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: app-secret
+          volumeMounts:
+            - name: app-config-volume
+              mountPath: /app/config/config.json
+              subPath: config.json
+      volumes:
+        - name: app-config-volume
+          configMap:
+            name: app-config

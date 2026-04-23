@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  config.json: |
+    {
+      "message": "mise a jour du configmap",
+      "version": "1.0.0"
+    }
